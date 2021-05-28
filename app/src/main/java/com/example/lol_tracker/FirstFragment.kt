@@ -26,7 +26,7 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_ChampionListFragment)
+            findNavController().navigate(R.id.navigateToChampionListFragment)
         }
     }
 }

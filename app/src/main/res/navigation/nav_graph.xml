@@ -3,18 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/ChampionListFragment">
 
-    <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.lol_tracker.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
-        <action
-            android:id="@+id/action_FirstFragment_to_ChampionListFragment"
-            app:destination="@id/ChampionListFragment" />
-    </fragment>
     <fragment
         android:id="@+id/ChampionListFragment"
         android:name="com.example.lol_tracker.presentation.list.ChampionListFragment"
@@ -22,7 +12,18 @@
         tools:layout="@layout/fragment_champion_list">
 
         <action
-            android:id="@+id/action_ChampionListFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/navigateToChampionDetailFragment"
+            app:destination="@id/ChampionDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/ChampionDetailFragment"
+        android:name="com.example.lol_tracker.FirstFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first">
+
+        <action
+            android:id="@+id/navigateToChampionListFragment"
+            app:destination="@id/ChampionListFragment" />
+    </fragment>
+
 </navigation>
