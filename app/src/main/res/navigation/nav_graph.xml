@@ -17,9 +17,9 @@
     </fragment>
     <fragment
         android:id="@+id/ChampionDetailFragment"
-        android:name="com.example.lol_tracker.FirstFragment"
+        android:name="com.example.lol_tracker.presentation.detail.ChampionDetailFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/framgent_champion_detail">
 
         <action
             android:id="@+id/navigateToChampionListFragment"
