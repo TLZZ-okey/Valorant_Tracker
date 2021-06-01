@@ -4,4 +4,4 @@ LOL_Tracker (En réalité Valorant Tracker), est une application listant les dif
 Cette application utilise la valorant-api (https://valorant-api.com/v1/agents).
 
 ### Screen ###
-<a href="">List Screen</a>
+<a href="https://github.com/TLZZ-okey/LOL_Tracker/blob/master/app/src/main/res/drawable/background.jpg">List Screen</a>
