@@ -6,7 +6,7 @@ import retrofit2.http.Path
 
 
 interface ChampApi {
-    @GET("pokemon")
+    @GET("agents")
     fun getChampionList(): Call<ChampionListResponse>
 
     @GET("pokemon/{id}")

@@ -1,11 +1,17 @@
 package com.example.lol_tracker.presentation.list
 
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lol_tracker.R
+import com.example.lol_tracker.presentation.Singletons
+import com.example.lol_tracker.presentation.detail.ChampionDetailFragment
 
 class ChampionAdapter(private var dataSet: List<Champion>, var listener: ((Champion) -> Unit)? = null) :
     RecyclerView.Adapter<ChampionAdapter.ViewHolder>() {
@@ -13,6 +19,8 @@ class ChampionAdapter(private var dataSet: List<Champion>, var listener: ((Champ
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
+    private lateinit var champion : Champion
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
         init {
@@ -40,14 +48,16 @@ class ChampionAdapter(private var dataSet: List<Champion>, var listener: ((Champ
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        val champion : Champion = dataSet[position]
-        viewHolder.textView.text = champion.name
+        champion = dataSet[position]
+        Singletons.position = position
+        viewHolder.textView.text = champion.displayName
         viewHolder.itemView.setOnClickListener {
+            Singletons.currentChampion = champion
+            Log.e("ChampionAdapter", Singletons.currentChampion.displayName)
             listener?.invoke(champion)
         }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
 }

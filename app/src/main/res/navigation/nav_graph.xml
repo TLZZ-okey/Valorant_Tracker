@@ -20,6 +20,10 @@
         android:name="com.example.lol_tracker.presentation.detail.ChampionDetailFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/framgent_champion_detail">
+        <argument
+            android:name="current_champion"
+            app:argType="com.example.lol_tracker.presentation.list.Champion"
+            />
 
         <action
             android:id="@+id/navigateToChampionListFragment"
