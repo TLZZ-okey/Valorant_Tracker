@@ -1,5 +1,6 @@
 package com.example.lol_tracker.presentation.list
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,8 @@ import com.example.lol_tracker.R
 import com.example.lol_tracker.presentation.Singletons
 import com.example.lol_tracker.presentation.api.ChampApi
 import com.example.lol_tracker.presentation.api.ChampionListResponse
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,12 +30,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ChampionListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private val adapter = ChampionAdapter(listOf<Champion>(), ::onClickedChampion)
-    lateinit var champ : Champion
-    var i : Int = 0;
+    //private val sharedPref = activity?.getSharedPreferences("app", Context.MODE_PRIVATE)
+
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         //Log.e("Champion", Singletons.currentChampion.displayName)
         // Inflate the layout for this fragment
@@ -47,24 +50,60 @@ class ChampionListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = this@ChampionListFragment.adapter
         }
+        callApi()
+        /*val list = getListFromCache()
+        if(list.isEmpty()){
+            callApi()
+        } else{
+            showList(list)
+        }*/
+    }
+
+    /*private fun getListFromCache() : List<Champion> {
+        val gson = Gson()
+        val json: String? = sharedPref?.getString("Champion List", null)
+        val champ: List<Champion> = gson.fromJson(json, List<Champion::class.java>)
+        return Singletons.champList
+    }
+
+    private fun saveListIntoCache() {
+        val edit = sharedPref?.edit()
+        val g = Gson()
+        val json : String = g.toJson(Singletons.champList)
+        Log.e("json", "json")
+        edit?.putString("Champion List", json)
+        edit?.apply()
+    }
+*/
+    private fun showList(champList: List<Champion>){
+        adapter.updateList(champList)
+    }
+
+    private fun callApi() {
         val champApi: ChampApi = Retrofit.Builder()
                 .baseUrl("https://valorant-api.com/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(ChampApi::class.java)
 
-        champApi.getChampionList().enqueue(object : Callback<ChampionListResponse>{
+        champApi.getChampionList().enqueue(object : Callback<ChampionListResponse> {
             override fun onFailure(call: Call<ChampionListResponse>, t: Throwable) {
                 //TODO("Not yet implemented")
             }
 
-            override fun onResponse(call: Call<ChampionListResponse>, response: Response<ChampionListResponse>) {
+            override fun onResponse(
+                call: Call<ChampionListResponse>,
+                response: Response<ChampionListResponse>
+            ) {
                 //TODO("Not yet implemented")
-                if(response.isSuccessful && response.body() != null){
+                if (response.isSuccessful && response.body() != null) {
+                    //saveListIntoCache()
                     val championResponse = response.body()!!
                     adapter.updateList(championResponse.data)
                     Singletons.champList = championResponse.data
-                    /*for(champ in Singletons.champList){
+                    /*lateinit var champ : Champion
+                    var i : Int = 0;
+                    for(champ in Singletons.champList){
                         Log.e("List champion", champ.displayName)
                         Log.e("id", i.toString())
                         i++
@@ -73,9 +112,12 @@ class ChampionListFragment : Fragment() {
             }
         })
     }
+
     private fun onClickedChampion(champion: Champion){
-        findNavController().navigate(R.id.navigateToChampionDetailFragment, bundleOf(
+        findNavController().navigate(
+            R.id.navigateToChampionDetailFragment, bundleOf(
                 "current_champion" to champion
-        ))
+            )
+        )
     }
 }
