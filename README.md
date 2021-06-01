@@ -10,7 +10,7 @@ Cette application utilise la valorant-api (https://valorant-api.com/v1/agents).
 
 <b> TODO </b>
 <br>
-Ajouter le cache avec Share Preferences
-Rajouter plus d'information sur les champions (sort, rôles, etc...)
-Rajouter un screen pour les armes, les maps , l'avancée dans le jeu, etc...
-Corriger bugs de listener 
+Ajouter le cache avec Share Preferences<br>
+Rajouter plus d'information sur les champions (sort, rôles, etc...)<br>
+Rajouter un screen pour les armes, les maps , l'avancée dans le jeu, etc...<br>
+Corriger bugs de listener <br>
