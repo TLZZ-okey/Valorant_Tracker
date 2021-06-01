@@ -5,6 +5,7 @@ Cette application utilise la valorant-api (https://valorant-api.com/v1/agents).
 
 ### Screen ###
 <a href="https://github.com/TLZZ-okey/LOL_Tracker/blob/master/app/src/main/res/drawable/List%20Screen.png">List Screen</a>
+<br>
 <a href="https://github.com/TLZZ-okey/LOL_Tracker/blob/master/app/src/main/res/drawable/Detail%20Screen.png">Detail Screen</a>
 
 <b> TODO </b>
