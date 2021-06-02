@@ -29,7 +29,6 @@ class ChampionDetailFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        Log.e("Champion Detail", Singletons.position.toString())
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.framgent_champion_detail, container, false)
     }
@@ -40,28 +39,12 @@ class ChampionDetailFragment : Fragment() {
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.navigateToChampionListFragment)
         }
-        val campeon : Champion = arguments?.getSerializable("current_champion") as Champion
-        //Log.e("Campeon", campeon.displayName)
+        val currentChampion : Champion = arguments?.getSerializable("current_champion") as Champion
+        Log.e("Champion", currentChampion.displayName)
         textViewName = view.findViewById(R.id.champion_detail_name)
         textViewDescription = view.findViewById(R.id.champion_detail_description)
 
-        textViewName.text = Singletons.currentChampion.displayName
-        textViewDescription.text = Singletons.currentChampion.description
-
-        //callApi();
+        textViewName.text = currentChampion.displayName
+        textViewDescription.text = currentChampion.description
     }
-
-
-    /*private fun callApi(){
-        Singletons.champApi.getChampionDetail("1").enqueue(object : Callback<ChampionDetailResponse>{
-            override fun onFailure(call: Call<ChampionDetailResponse>, t: Throwable) {
-
-            }
-            override fun onResponse(call: Call<ChampionDetailResponse>, response: Response<ChampionDetailResponse>) {
-                if(response.isSuccessful && response.body() != null){
-                    textViewName.text = response.body()!!.name
-                }
-            }
-        })
-    }*/
 }

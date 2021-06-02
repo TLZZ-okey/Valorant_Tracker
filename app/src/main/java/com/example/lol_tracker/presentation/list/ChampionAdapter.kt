@@ -55,11 +55,8 @@ class ChampionAdapter(private var dataSet: List<Champion>, var listener: ((Champ
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         champion = dataSet[position]
-        Singletons.position = position
         viewHolder.textView.text = champion.displayName
         viewHolder.itemView.setOnClickListener {
-            Singletons.currentChampion = champion
-            Log.e("ChampionAdapter", Singletons.currentChampion.displayName)
             listener?.invoke(champion)
         }
 

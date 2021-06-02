@@ -42,7 +42,6 @@ class ChampionListFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        //Log.e("Champion", Singletons.currentChampion.displayName)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_champion_list, container, false)
     }
@@ -85,13 +84,7 @@ class ChampionListFragment : Fragment() {
     }
 
     private fun callApi() {
-        val champApi: ChampApi = Retrofit.Builder()
-                .baseUrl("https://valorant-api.com/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(ChampApi::class.java)
-
-        champApi.getChampionList().enqueue(object : Callback<ChampionListResponse> {
+        Singletons.champApi.getChampionList().enqueue(object : Callback<ChampionListResponse> {
             override fun onFailure(call: Call<ChampionListResponse>, t: Throwable) {
                 //TODO("Not yet implemented")
             }
@@ -106,14 +99,6 @@ class ChampionListFragment : Fragment() {
                     saveListIntoCache(championResponse.data)
                     Log.e("Cache", "List saved")
                     adapter.updateList(championResponse.data)
-                    Singletons.champList = championResponse.data
-                    /*lateinit var champ : Champion
-                    var i : Int = 0;
-                    for(champ in Singletons.champList){
-                        Log.e("List champion", champ.displayName)
-                        Log.e("id", i.toString())
-                        i++
-                    }*/
                 }
             }
         })

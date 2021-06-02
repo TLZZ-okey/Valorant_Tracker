@@ -7,8 +7,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Singletons {
     companion object {
-        lateinit var currentChampion : Champion
-        lateinit var champList : List<Champion>
-        var position : Int = 0
+        val champApi: ChampApi = Retrofit.Builder()
+            .baseUrl("https://valorant-api.com/v1/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ChampApi::class.java)
     }
 }
