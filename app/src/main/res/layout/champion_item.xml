@@ -6,17 +6,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <ImageView
+        android:id="@+id/champion_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
     <TextView
         android:id="@+id/champion_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
+        android:text="Raze"
+        android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/champion_img"
         app:layout_constraintTop_toTopOf="parent"
         />
 

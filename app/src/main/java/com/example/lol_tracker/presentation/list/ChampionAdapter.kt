@@ -7,8 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.lol_tracker.R
 import com.example.lol_tracker.presentation.Singletons
 import com.example.lol_tracker.presentation.detail.ChampionDetailFragment
@@ -23,9 +25,13 @@ class ChampionAdapter(private var dataSet: List<Champion>, var listener: ((Champ
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
+        val imageView: ImageView
+
         init {
             // Define click listener for the ViewHolder's View.
             textView = view.findViewById(R.id.champion_name)
+            imageView = view.findViewById(R.id.champion_img)
+
         }
     }
 
@@ -56,6 +62,12 @@ class ChampionAdapter(private var dataSet: List<Champion>, var listener: ((Champ
             Log.e("ChampionAdapter", Singletons.currentChampion.displayName)
             listener?.invoke(champion)
         }
+
+        Glide
+                .with(viewHolder.itemView.context)
+                .load(champion.displayIconSmall)
+                .centerCrop()
+                .into(viewHolder.imageView)
     }
 
     // Return the size of your dataset (invoked by the layout manager)

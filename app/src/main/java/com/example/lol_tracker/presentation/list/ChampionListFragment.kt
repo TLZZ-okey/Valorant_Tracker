@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.lol_tracker.R
 import com.example.lol_tracker.presentation.Singletons
 import com.example.lol_tracker.presentation.api.ChampApi
@@ -122,7 +123,6 @@ class ChampionListFragment : Fragment() {
         findNavController().navigate(
                 R.id.navigateToChampionDetailFragment, bundleOf(
                 "current_champion" to champion
-        )
-        )
+        ))
     }
 }
