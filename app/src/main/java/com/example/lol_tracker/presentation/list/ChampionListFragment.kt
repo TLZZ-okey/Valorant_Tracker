@@ -1,7 +1,7 @@
 package com.example.lol_tracker.presentation.list
 
 import android.content.Context
-import android.content.SharedPreferences
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,6 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.Type
 
 
 /**
@@ -37,8 +38,8 @@ class ChampionListFragment : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         //Log.e("Champion", Singletons.currentChampion.displayName)
         // Inflate the layout for this fragment
@@ -52,22 +53,25 @@ class ChampionListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = this@ChampionListFragment.adapter
         }
-        callApi()
-        /*val list = getListFromCache()
-        if(list.isEmpty()){
+        val list = getListFromCache()
+        if(list == null){
             callApi()
         } else{
             showList(list)
-        }*/
+        }
     }
 
-    private fun getListFromCache() : List<Champion> {
-        /*val json: String? = sharedPref?.getString("Champion List", null)
-        val champ: List<Champion> = g.fromJson(json, List<Champion::class.java>)*/
-        return Singletons.champList
+    private fun getListFromCache() : List<Champion>? {
+        val json : String? = sharedPref?.getString("jsonChampionList", null)
+        if(json == null){
+            return null
+        }else{
+            val type: Type = object : TypeToken<List<Champion>>() {}.type
+            return g.fromJson(json, type)
+        }
     }
 
-    private fun saveListIntoCache(champList : List<Champion>) {
+    private fun saveListIntoCache(champList: List<Champion>) {
         val json : String = g.toJson(champList)
         sharedPref
                 ?.edit()
@@ -92,8 +96,8 @@ class ChampionListFragment : Fragment() {
             }
 
             override fun onResponse(
-                call: Call<ChampionListResponse>,
-                response: Response<ChampionListResponse>
+                    call: Call<ChampionListResponse>,
+                    response: Response<ChampionListResponse>
             ) {
                 //TODO("Not yet implemented")
                 if (response.isSuccessful && response.body() != null) {
@@ -116,9 +120,9 @@ class ChampionListFragment : Fragment() {
 
     private fun onClickedChampion(champion: Champion){
         findNavController().navigate(
-            R.id.navigateToChampionDetailFragment, bundleOf(
+                R.id.navigateToChampionDetailFragment, bundleOf(
                 "current_champion" to champion
-            )
+        )
         )
     }
 }
