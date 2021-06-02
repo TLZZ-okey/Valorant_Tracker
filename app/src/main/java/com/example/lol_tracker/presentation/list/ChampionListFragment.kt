@@ -1,6 +1,7 @@
 package com.example.lol_tracker.presentation.list
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,7 +31,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ChampionListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private val adapter = ChampionAdapter(listOf<Champion>(), ::onClickedChampion)
-    //private val sharedPref = activity?.getSharedPreferences("app", Context.MODE_PRIVATE)
+    private var sharedPref = activity?.getSharedPreferences("app", Context.MODE_PRIVATE)
+    private val g = Gson()
+
 
 
     override fun onCreateView(
@@ -44,7 +47,6 @@ class ChampionListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         recyclerView = view.findViewById(R.id.champion_recyclerview)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -59,22 +61,20 @@ class ChampionListFragment : Fragment() {
         }*/
     }
 
-    /*private fun getListFromCache() : List<Champion> {
-        val gson = Gson()
-        val json: String? = sharedPref?.getString("Champion List", null)
-        val champ: List<Champion> = gson.fromJson(json, List<Champion::class.java>)
+    private fun getListFromCache() : List<Champion> {
+        /*val json: String? = sharedPref?.getString("Champion List", null)
+        val champ: List<Champion> = g.fromJson(json, List<Champion::class.java>)*/
         return Singletons.champList
     }
 
-    private fun saveListIntoCache() {
-        val edit = sharedPref?.edit()
-        val g = Gson()
-        val json : String = g.toJson(Singletons.champList)
-        Log.e("json", "json")
-        edit?.putString("Champion List", json)
-        edit?.apply()
+    private fun saveListIntoCache(champList : List<Champion>) {
+        val json : String = g.toJson(champList)
+        sharedPref
+                ?.edit()
+               ?.putString("jsonChampionList", json)
+               ?.apply()
     }
-*/
+
     private fun showList(champList: List<Champion>){
         adapter.updateList(champList)
     }
@@ -97,8 +97,9 @@ class ChampionListFragment : Fragment() {
             ) {
                 //TODO("Not yet implemented")
                 if (response.isSuccessful && response.body() != null) {
-                    //saveListIntoCache()
                     val championResponse = response.body()!!
+                    saveListIntoCache(championResponse.data)
+                    Log.e("Cache", "List saved")
                     adapter.updateList(championResponse.data)
                     Singletons.champList = championResponse.data
                     /*lateinit var champ : Champion
